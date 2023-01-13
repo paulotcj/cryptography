@@ -13,7 +13,7 @@ class KeyStream:
     def get_key_byte(self):
         #"Another flaw specific to LCGs is the short period of the low-order bits when m is chosen to be a power of 2. 
         # This can be mitigated by using a modulus larger than the required output, and using the most significant bits of the state."
-        return (self.rand()>>(23)) #% 256
+        return (self.rand()//2**23) % 256
 
 #-------------------------------------------------
 
@@ -87,42 +87,42 @@ def brute_force(plain, cipher):
 
 print("\n------------------------------------------")
 
-secret_key = random.randrange(0,2*31)
+secret_key = random.randrange(0,2*20)
 #Alice
 alice_key = KeyStream(secret_key)
-alice_header = "MESSAGE: "
-alice_message = alice_header + "My secret message to Bob"
-alice_message = alice_message.encode()
-alice_cipher = encrypt(alice_key, alice_message )
+# alice_header = "MESSAGE: "
+# alice_message = alice_header + "My secret message to Bob"
+# alice_message = alice_message.encode()
+# alice_cipher = encrypt(alice_key, alice_message )
 
-#Bob
-bob_key = KeyStream(secret_key)
-bob_message = encrypt(bob_key, alice_cipher)
+# #Bob
+# bob_key = KeyStream(secret_key)
+# bob_message = encrypt(bob_key, alice_cipher)
 
-#Eve
-eve_bruteforce_key = brute_force(alice_header.encode(), alice_cipher )
-eve_key = KeyStream(eve_bruteforce_key)
-eve_message = encrypt(eve_key, alice_cipher)
+# #Eve
+# eve_bruteforce_key = brute_force(alice_header.encode(), alice_cipher )
+# eve_key = KeyStream(eve_bruteforce_key)
+# eve_message = encrypt(eve_key, alice_cipher)
 
-print("secret_key: ", secret_key)
-print("eve_bruteforce_key: ", eve_bruteforce_key)
-print("alice original message: ",alice_message)
-print("eve cracked the message: ", eve_message)
+# print("secret_key: ", secret_key)
+# print("eve_bruteforce_key: ", eve_bruteforce_key)
+# print("alice original message: ",alice_message)
+# print("eve cracked the message: ", eve_message)
 
 # print("alice_key.rand() % 256")
 # for i in range(1000):
 #     var_rand = alice_key.rand()
 #     print('{: >14}'.format(var_rand), ", ", '{: >14}'.format(  (var_rand % 256) ), "|" )
 
-# print("alice_key.rand() >> 23 % 256")
-# for i in range(10_000):
-#     var_rand = alice_key.rand()
-#     var_rand_shiftted = var_rand >> 23
-#     print(
-#         '{: >14}'.format(var_rand), ", ", 
-#         '{: >14}'.format(var_rand_shiftted), "$, ", 
-#         '{: >14}'.format(  (var_rand_shiftted % 256) ), "|" 
-#         )
+print("alice_key.rand() >> 23 % 256")
+for i in range(10_000):
+    var_rand = alice_key.rand()
+    var_rand_shiftted = var_rand >> 23
+    print(
+        '{: >14}'.format(var_rand), ", ", 
+        '{: >14}'.format(var_rand_shiftted), "$, ", 
+        '{: >14}'.format(  (var_rand_shiftted % 256) ), "|" 
+        )
 
 
 # print("alice_key.rand()")
