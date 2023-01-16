@@ -1,14 +1,7 @@
 from pyDes import *
 
-def modify(cipher):
-    mod = [0]*len(cipher)
-    mod[8] = 1
 
-    return bytes( [ mod[i] ^ cipher[i] for i in range(len(cipher)) ] )
-
-
-
-alice_message = "Give Bob:   10$ and then add some extra text here for experimenting purposes"
+alice_message = "Give Bob:   10$"
 alice_key = "DESCRYPT"
 alice_iv = bytes([0]*8)
 alice_k = des(key = alice_key, mode = ECB, IV = alice_iv, pad=None, padmode=PAD_PKCS5)
@@ -24,7 +17,6 @@ print("Encrypted (Alice): ", alice_cipher)
 
 
 #Bob modifying the cipher text
-alice_cipher = modify(alice_cipher)
 
 
 #this is the bank decrypting the message
