@@ -158,6 +158,7 @@ print("   Public exponent:", e)
 
 print("Step 5: solve for d the equation (d*e) mod φ(n) ≡ 1")
 d = get_d_min_d(e, phi_n, min_d = (e+1))
+# d = get_d_min_d(e, phi_n)
 print("   Secret exponent", d)
 
 print("Step 6: Revise the data gathered so far")
@@ -167,7 +168,7 @@ print("   Private Keys: (d)   -> (", d, ")")
 
 
 print("\nThis is Bob wanting to send a message:")
-bob_m = 2
+bob_m = 98
 bob_c = (bob_m**e) % n
 
 print("Bob's message:",bob_m,"Bob's cipher :", bob_c)

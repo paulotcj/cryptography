@@ -88,10 +88,10 @@ def get_d(e, lambda_n):
     return False
 
 
-def factor(n):
-    for p in range(2, n):
-        if n % p == 0:
-            return p, n//p
+# def factor(n):
+#     for p in range(2, n):
+#         if n % p == 0:
+#             return p, n//p
 
 
 
@@ -118,6 +118,17 @@ n = p*q
 print("   n:",n)
 
 print("Step 3: Compute lambda(n) (lcm(n) = λ(n) = lcm(λ(p),λ(q)), λ(p)=p-1, lcm(a,b) = |ab|/gcd(a,b))")
+#   In the original RSA paper,[1] the Euler totient function φ(n) = (p − 1)(q − 1) is used instead 
+#   of λ(n) for calculating the private exponent d. Since φ(n) is always divisible by λ(n), the 
+#   algorithm works as well. The possibility of using Euler totient function results also from 
+#   Lagrange's theorem applied to the multiplicative group of integers modulo pq. Thus any d 
+#   satisfying d⋅e ≡ 1 (mod φ(n)) also satisfies d⋅e ≡ 1 (mod λ(n)). However, computing 
+#   d modulo φ(n) will sometimes yield a result that is larger than necessary (i.e. d > λ(n)). 
+#   Most of the implementations of RSA will accept exponents generated using either method (if they 
+#   use the private exponent d at all, rather than using the optimized decryption method based on 
+#   the Chinese remainder theorem described below), but some standards such as FIPS 186-4 may 
+#   require that d < λ(n). Any "oversized" private exponents not meeting this criterion may always 
+#   be reduced modulo λ(n) to obtain a smaller equivalent exponent.
 lambda_n = lcm(p-1, q-1)
 print("   Lambda n", lambda_n)
 
@@ -130,8 +141,8 @@ d = get_d(e, lambda_n)
 print("   Secret exponent", d)
 
 print("   Done with key generation.")
-print("   Public key (e,n):", e, n)
-print("   Secret key (d)", d)
+print("   Public Keys:  (e,n) -> (", e, "," , n , ")")
+print("   Private Keys: (d)   -> (", d, ")")
 
 
 print("\nThis is Bob wanting to send a message:")
