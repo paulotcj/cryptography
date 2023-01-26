@@ -88,10 +88,10 @@ def get_d(e, lambda_n):
     return False
 
 
-def factor(n):
-    for p in range(2, n):
-        if n % p == 0:
-            return p, n//p
+# def factor(n):
+#     for p in range(2, n):
+#         if n % p == 0:
+#             return p, n//p
 
 
 
@@ -155,22 +155,3 @@ print("This is Alice decrypting the cipher")
 alice_m = bob_c**d % n
 
 print("Alice receives this message:", alice_m)
-
-
-#This is Eve
-print("Eve sees the following:")
-print("   Public Keys:  (e,n) -> (", e, "," , n , ")")
-print("   Encrypted cipher:", bob_c)
-
-p_new , q_new = factor(n)
-print("   Factors (p,q)         -> (", p,",", q,")")
-print("   Factors (p_new,q_new) -> (", p_new,",", q_new,")")
-lambda_n_new = lcm(p_new-1, q_new-1)
-e_new = e
-d_new = d = get_d(e_new, lambda_n_new)
-print("   lambda_n_new: ", lambda_n_new)
-print("   d_new: ", d_new)
-
-Eve_hacked_m = bob_c**d_new % n
-
-print("   Eve_hacked_m: ", Eve_hacked_m, ", Original Message: ", bob_m)
