@@ -174,3 +174,12 @@ print("   d_new: ", d_new)
 Eve_hacked_m = bob_c**d_new % n
 
 print("   Eve_hacked_m: ", Eve_hacked_m, ", Original Message: ", bob_m)
+
+print("This is Bob not being careful")
+message  = "Alice is awesome"
+for m_c in message:
+    c = ord(m_c)**e % n
+    print(c, " " , end='')
+
+print()
+print("Notice how the characters at position 5, 12, and 16 are the same from the original message and they also result in the same cipher")
