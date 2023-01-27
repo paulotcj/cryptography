@@ -46,6 +46,11 @@ def factor(n):
             return p, n//p
 
 
+def modify_message(message):
+    l = list(message)
+    l[0] = l[0] ^ 1
+    return bytes(l)
+
 
 
 #---------------------------------------------------------------            
@@ -105,11 +110,23 @@ print("message:", m, ",  sign:", sign)
 print("Step 4: Verifying the signature")
 sha256_bob = hashlib.sha256()
 sha256_bob.update(m)
-h_bob = sha256.digest()
+h_bob = sha256_bob.digest()
 h_bob = int.from_bytes(h_bob, "big") % n
 verification = sign**e % n
 print(" Bob verifying the signature: verification:", verification, ",   h_bob:",h_bob)
 
 
 
+print("\nNow Eve wants to change the message")
+m_mod = modify_message(m)
+print("m    :", m)
+print("m_mod:", m_mod)
 
+
+print("Verifying the signature of a fake/changed message")
+sha256_bob2 = hashlib.sha256()
+sha256_bob2.update(m_mod)
+h_bob2 = sha256_bob2.digest()
+h_bob2 = int.from_bytes(h_bob2, "big") % n
+verification2 = sign**e % n
+print(" Bob verifying the signature: verification:", verification2, ",   h_bob:",h_bob2)
